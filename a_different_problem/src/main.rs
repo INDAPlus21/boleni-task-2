@@ -4,7 +4,13 @@ fn main() {
 
     loop {
         let mut input = String::new();
-        io::stdin().read_line(&mut input).expect("There was something wrong with the input.");
+        let bytes_read = io::stdin().read_line(&mut input).expect("There was something wrong with the input.");
+
+        /* https://stackoverflow.com/questions/27475113/how-to-check-for-eof-with-read-line
+        Credit to Viola & this question for this neat solution (see below)
+        Without it, when receiving EOF the code breaks in kattis :(
+        */
+        if bytes_read == 0 {break;}
 
         let numbers = input.trim().split(" ").collect::<Vec<&str>>();
         let n1 = numbers[0].parse::<i64>().expect("Please input a valid number.");
